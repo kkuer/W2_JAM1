@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - box
+  - box_2x
+  - box_3x
+  - box_0.5x
+  - trash
   layers:
   - Default
   - TransparentFX

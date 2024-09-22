@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 public class ConveyerMove : MonoBehaviour
 {
@@ -18,7 +21,21 @@ public class ConveyerMove : MonoBehaviour
     public Color medium;
     public Color fast;
 
+    public Volume ppfxVolume;
+    ChromaticAberration ca;
+
     public bool direction = true;
+
+    public Image indicator;
+
+    private float slowRotation = -50f;
+    private float mediumRotation = -18f;
+    private float fastRotation = 40f;
+
+    private void Start()
+    {
+        ppfxVolume.profile.TryGet(out ca);
+    }
 
     void Update()
     {
@@ -47,6 +64,10 @@ public class ConveyerMove : MonoBehaviour
 
             arrowsLeft.SetColor("_Color", slow);
             arrowsRight.SetColor("_Color", slow);
+
+            ca.intensity.value = 0.05f;
+
+            indicator.rectTransform.rotation = Quaternion.Euler(0, 0, slowRotation);
         }
         else if (speed == 2)
         {
@@ -55,6 +76,10 @@ public class ConveyerMove : MonoBehaviour
 
             arrowsLeft.SetColor("_Color", medium);
             arrowsRight.SetColor("_Color", medium);
+
+            ca.intensity.value = 0.2f;
+
+            indicator.rectTransform.rotation = Quaternion.Euler(0, 0, mediumRotation);
         }
         else if (speed == 3)
         {
@@ -63,6 +88,10 @@ public class ConveyerMove : MonoBehaviour
 
             arrowsLeft.SetColor("_Color", fast);
             arrowsRight.SetColor("_Color", fast);
+
+            ca.intensity.value = 0.5f;
+
+            indicator.rectTransform.rotation = Quaternion.Euler(0, 0, fastRotation);
         }
         
     }
