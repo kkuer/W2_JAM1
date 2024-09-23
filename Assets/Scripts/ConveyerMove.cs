@@ -23,6 +23,7 @@ public class ConveyerMove : MonoBehaviour
 
     public Volume ppfxVolume;
     ChromaticAberration ca;
+    LensDistortion ld;
 
     public bool direction = true;
 
@@ -32,9 +33,15 @@ public class ConveyerMove : MonoBehaviour
     private float mediumRotation = -18f;
     private float fastRotation = 40f;
 
+    public ParticleSystem fastParticles;
+    public ParticleSystem mediumParticles;
+
+    public ScreenShake shake;
+
     private void Start()
     {
         ppfxVolume.profile.TryGet(out ca);
+        ppfxVolume.profile.TryGet(out ld);
     }
 
     void Update()
@@ -52,10 +59,12 @@ public class ConveyerMove : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W) && speed < 3)
         {
             speed++;
+            shake.TriggerShake();
         }
         if (Input.GetKeyDown(KeyCode.S) && speed > 1)
         {
             speed--;
+            shake.TriggerShake();
         }
         if (speed == 1)
         {
@@ -66,8 +75,14 @@ public class ConveyerMove : MonoBehaviour
             arrowsRight.SetColor("_Color", slow);
 
             ca.intensity.value = 0.05f;
+            ld.intensity.value = 0f;
 
             indicator.rectTransform.rotation = Quaternion.Euler(0, 0, slowRotation);
+
+            if (mediumParticles.isPlaying) 
+            {
+                mediumParticles.Stop();
+            }
         }
         else if (speed == 2)
         {
@@ -78,8 +93,19 @@ public class ConveyerMove : MonoBehaviour
             arrowsRight.SetColor("_Color", medium);
 
             ca.intensity.value = 0.2f;
+            ld.intensity.value = -0.25f;
 
             indicator.rectTransform.rotation = Quaternion.Euler(0, 0, mediumRotation);
+
+            if (!mediumParticles.isPlaying)
+            {
+                mediumParticles.Play();
+            }
+            if (fastParticles.isPlaying) 
+            {
+                fastParticles.Stop();
+            }
+            
         }
         else if (speed == 3)
         {
@@ -90,8 +116,18 @@ public class ConveyerMove : MonoBehaviour
             arrowsRight.SetColor("_Color", fast);
 
             ca.intensity.value = 0.5f;
+            ld.intensity.value = -0.4f;
 
             indicator.rectTransform.rotation = Quaternion.Euler(0, 0, fastRotation);
+
+            if (mediumParticles.isPlaying)
+            {
+                mediumParticles.Stop();
+            }
+            if (!fastParticles.isPlaying)
+            {
+                fastParticles.Play();
+            }
         }
         
     }
