@@ -38,6 +38,8 @@ public class ConveyerMove : MonoBehaviour
 
     public ScreenShake shake;
 
+    public AudioSource speedUp;
+
     private void Start()
     {
         ppfxVolume.profile.TryGet(out ca);
@@ -60,11 +62,13 @@ public class ConveyerMove : MonoBehaviour
         {
             speed++;
             shake.TriggerShake();
+            speedUp.Play();
         }
         if (Input.GetKeyDown(KeyCode.S) && speed > 1)
         {
             speed--;
             shake.TriggerShake();
+            speedUp.Play();
         }
         if (speed == 1)
         {

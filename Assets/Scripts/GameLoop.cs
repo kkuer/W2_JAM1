@@ -45,12 +45,16 @@ public class GameLoop : MonoBehaviour
     {
         fadeIn.color = Color.Lerp(fadeIn.color, fadeTo, 0.05f);
 
-        if (timerOn)
+        if (checkTimer())
         {
             if (timeLeft > 0)
             {
                 timeLeft -= Time.deltaTime;
                 updateTimer(timeLeft);
+                if (timeLeft < 15)
+                {
+                    timerText.color = Color.red;
+                }
                 
             }
             else
@@ -65,6 +69,18 @@ public class GameLoop : MonoBehaviour
             }
         }
         
+    }
+
+    public bool checkTimer()
+    {
+        if (timerOn)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void updateScore(int amount)

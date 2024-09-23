@@ -12,14 +12,4 @@ public class RestartGame : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-
-    void OnMouseOver()
-    {
-        restartImage.rectTransform.sizeDelta = new Vector2(120, 120);
-    }
-
-    void OnMouseExit()
-    {
-        restartImage.rectTransform.sizeDelta = new Vector2(100, 100);
-    }
 }
